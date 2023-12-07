@@ -113,8 +113,10 @@ var helmetOptions = {
 app.use('/assets', express.static('assets', {
 	maxAge: '31536000000' 
 }));
-app.use(cors(corsOptions));
-app.use(helmet(helmetOptions));
+if (initial && initial.forceSecure) {
+	app.use(cors(corsOptions));
+	app.use(helmet(helmetOptions));
+}
 app.use(compression());
 app.use(function(req, res, next) {
     return next();
